@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+  "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" 
+  "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<definition name="base.definition" template="/matrixAdminFiles/matrixLayout.jsp">
+		<put-attribute name="header" value="/matrixAdminFiles/matrixTopMenuHeader.jsp" />
+		<put-attribute name="menu" value="/matrixAdminFiles/matrixLeftMenu.jsp" />
+		<put-attribute name="body" value="" />
+	</definition>
+	
+	
+<!-- 	<definition name="base.definition" template="/WEB-INF/jsp/layout.jsp"> -->
+<!-- 		<put-attribute name="title" value="" /> -->
+<!-- 		<put-attribute name="header" value="/WEB-INF/jsp/header.jsp" /> -->
+<!-- 		<put-attribute name="menu" value="/WEB-INF/jsp/menu.jsp" /> -->
+<!-- 		<put-attribute name="body" value="" /> -->
+<!-- 		<put-attribute name="footer" value="/WEB-INF/jsp/footer.jsp" /> -->
+<!-- 	</definition> -->
+
+	<definition name="login" template="/login.jsp" />
+	
+	<definition name="dashboard" extends="base.definition">
+		<put-attribute name="body" value="/dashboard.jsp" />
+	</definition>
+	
+	<definition name="showCreateRoomType" extends="base.definition">
+		<put-attribute name="body" value="/Room/showCreateRoomType.jsp" />
+	</definition>
+	
+	<definition name="showCreateRoom" extends="base.definition">
+		<put-attribute name="body" value="/Room/showCreateRoom.jsp" />
+	</definition>
+	
+	<definition name="CreatePlan" extends="base.definition">
+		<put-attribute name="body" value="/Room/showCreatePlan.jsp" />
+	</definition>
+	
+	<definition name="HotelPlanMasterList" extends="base.definition">
+		<put-attribute name="body" value="/Room/retrieveHotelPlanMasterList.jsp" />
+	</definition>
+	
+	<definition name="RoomList" extends="base.definition">
+		<put-attribute name="body" value="/Room/retrieveRoomList.jsp" />
+	</definition>
+
+	<definition name="CreateEmployee" extends="base.definition">
+		<put-attribute name="body" value="/Employee/createEmployee.jsp" />
+	</definition>
+	
+	<definition name="CreateModule" extends="base.definition">
+		<put-attribute name="body" value="/Module/createModule.jsp" />
+	</definition>
+	
+	<definition name="ModuleList" extends="base.definition">
+		<put-attribute name="body" value="/Module/retrieveModuleList.jsp" />
+	</definition>
+	
+	<definition name="CreatePrivilege" extends="base.definition">
+		<put-attribute name="body" value="/privilege/createPrivilege.jsp" />
+	</definition>
+	
+	<definition name="CreateRole" extends="base.definition">
+		<put-attribute name="body" value="/role/createRole.jsp" />
+	</definition>
+	
+	<definition name="EmailInbox" extends="base.definition">
+		<put-attribute name="body" value="/email/retrieveEmailInbox.jsp" />
+	</definition>
+	
+	<definition name="ComposeEmail" extends="base.definition">
+		<put-attribute name="body" value="/email/retrieveComposeEmail.jsp" />
+	</definition>
+	
+	<definition name="CreateHotel" extends="base.definition">
+		<put-attribute name="body" value="/hotel/createHotel.jsp" />
+	</definition>
+	
+	<definition name="SessionClosed" extends="base.definition">
+		<put-attribute name="body" value="/sessionClosed.jsp" />
+	</definition>
+	
+<!-- 	newly created -->
+	<definition name="ServersideRoomList" extends="base.definition">
+		<put-attribute name="body" value="/Room/retrieveServersideRoomList.jsp" />
+	</definition>
+	
+	<definition name="CreateTheme" extends="base.definition">
+		<put-attribute name="body" value="/Theme/showCreateTheme.jsp" />
+	</definition>
+	
+	
+<!-- 	<definition name="logout" extends="base.definition"> -->
+<!-- 		<put-attribute name="body" value="/index.jsp" /> -->
+<!-- 	</definition> -->
+	
+
+</tiles-definitions>

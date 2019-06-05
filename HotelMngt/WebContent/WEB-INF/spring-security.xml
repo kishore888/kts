@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/security
+    http://www.springframework.org/schema/security/spring-security.xsd">
+    
+<!--     http basic security -->
+<!--     <http> -->
+<!--         <intercept-url pattern="/dashboard*" access="hasRole('ROLE_USER')" /> -->
+<!--         <http-basic/> -->
+<!--     </http> -->
+    
+<!--     <authentication-manager> -->
+<!--         <authentication-provider> -->
+<!--             <user-service> -->
+<!--                 <user name="kishore" password="123" authorities="ROLE_USER" /> -->
+<!--             </user-service> -->
+<!--         </authentication-provider> -->
+<!--     </authentication-manager> -->
+    
+    
+<!--     end of http basic security -->
+
+<!--     default form login security -->
+<!--     <http> -->
+<!--         <intercept-url pattern="/dashboard*" access="hasRole('ROLE_USER')" /> -->
+<!--         <form-login/> -->
+<!--         <logout logout-success-url="/logout" logout-url="/j_spring_security_logout" /> -->
+<!--     </http> -->
+    
+<!--     <authentication-manager> -->
+<!--         <authentication-provider> -->
+<!--             <user-service> -->
+<!--                 <user name="kishore" password="123" authorities="ROLE_USER" /> -->
+<!--             </user-service> -->
+<!--         </authentication-provider> -->
+<!--     </authentication-manager> -->
+    
+    
+<!--     end of default form login security -->
+
+
+<!--     custom form login security -->
+<!--     <http auto-config="true"> -->
+<!--         <intercept-url pattern="/dashboard*" access="hasRole('ROLE_USER')" /> -->
+<!--         <form-login login-page="/login" default-target-url="/dashboard"  -->
+<!--         			login-processing-url="/j_spring_security_check" authentication-failure-url="/login?error" -->
+<!--        			 /> -->
+<!--         <logout logout-success-url="/logout" delete-cookies="JSESSIONID" logout-url="/logout"/> -->
+<!--         enable csrf protection -->
+<!-- 		<csrf/> -->
+<!--     </http> -->
+    
+<!--     <authentication-manager> -->
+<!--         <authentication-provider> -->
+<!--             <user-service> -->
+<!--                 <user name="kishore" password="123" authorities="ROLE_USER" /> -->
+<!--             </user-service> -->
+<!--         </authentication-provider> -->
+<!--     </authentication-manager> -->
+    
+    
+<!--     end of custom form login security -->
+
+ 
+<!--     <http auto-config="true"  use-expressions="true"> -->
+<!--         <intercept-url pattern="/login" access="permitAll" /> -->
+<!--         <intercept-url pattern="/logout" access="permitAll" /> -->
+<!--         <intercept-url pattern="/accessdenied" access="permitAll" /> -->
+<!--         <intercept-url pattern="/**" access="hasRole('ROLE_USER')" /> -->
+<!--         <form-login login-page="/login" default-target-url="/list" authentication-failure-url="/accessdenied" /> -->
+<!--         <logout logout-success-url="/logout" /> -->
+<!--     </http> -->
+ 
+<!--     <authentication-manager alias="authenticationManager"> -->
+<!--         <authentication-provider> -->
+<!--             <user-service> -->
+<!--                 <user name="lokesh" password="password" authorities="ROLE_USER" /> -->
+<!--             </user-service> -->
+<!--         </authentication-provider> -->
+<!--     </authentication-manager> -->
+ 
+</beans:beans>
