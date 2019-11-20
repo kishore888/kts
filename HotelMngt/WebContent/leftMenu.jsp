@@ -35,6 +35,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="hotel/showCreateHotel"><i class="fa fa-circle-o"></i> Add Hotel</a></li>
+            <li><a href="hotelPaymentGateway/create"><i class="fa fa-circle-o"></i> Payment Gateway</a></li>
           </ul>
         </li>
         <li class="treeview">

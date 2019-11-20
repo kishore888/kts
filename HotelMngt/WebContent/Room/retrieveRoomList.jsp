@@ -43,6 +43,7 @@
 		                  <th>max. No. of Adults</th>
 		                  <th>max. No. of Kids</th>
 		                  <th>Status</th>
+		                  <th>Actions</th>
 		                </tr>
 	                </thead>
 	                <tbody>
@@ -56,6 +57,11 @@
 			                  <td>${room.maxNoOfAdults}</td>
 			                  <td>${room.maxNoOfKids}</td>
 			                  <td>${room.status}</td>
+			                  <td>
+			                    <a href="reservation/bookRoom?roomId=${room.roomId}" role="button" class="btn btn-success">Book</a>
+<!-- 			                  	<button type="button" class="btn btn-success" data-role="button" data-toggle="modal" data-target="#paymentModel" -->
+<%-- 			                  	 id="book-button" data-roomId="${room.roomId}" data-roomno="${room.roomNumber}" data-roomcharges="${room.roomCharges}">Book</button> --%>
+			                  </td>
 			                </tr>
 		                </c:forEach>
 		            </tbody>
@@ -101,9 +107,49 @@
     </div>
   </div>
 
+<div class="modal fade" id="paymentModel" role="dialog" tabindex="-1" aria-labelledby="Payment Gateways" aria-hidden="true">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Book Room No <span id="roomNo"></span></h4>
+        </div>
+        <div class="modal-body">
+          <p>Some text in the modal.</p>
+          <input type="hidden" name="" id="roomId" value="">
+          
+          <table id="book-table">
+	          <tbody>
+		          <tr>
+		          <td>Amount</td>
+		          <td></td>
+		          <td id="amount"></td>
+		          </tr>
+	          </tbody>
+          </table>
+          <c:forEach items="${hotelPaymentGatewayList}" var="hotelPaymentGateway" varStatus="">
+          	<a href="hotelPaymentGateway/pay?roomId=${room.roomId}&hotelPaymentGatewayId=${hotelPaymentGateway.hotelPaymentGatewayId}&amount=" role="button" class="btn btn-success">${hotelPaymentGateway.paymentGateway.paymentGatewayName}</a>
+          </c:forEach>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 
 </div>
-
+<script>
+$('#book-button').on('click', function(){
+	$('#roomId').text($(this).attr('data-roomid'));
+	$('#roomNo').text($(this).attr('data-roomno'));
+	$('#book-table').find('#amount').text($(this).attr('data-roomcharges'));
+});
+</script>
 <script>
 var roomTable = $('#roomList').DataTable({
       'paging'      : true,

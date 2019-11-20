@@ -1,5 +1,7 @@
 package com.hospitality.config;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,6 +24,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 @Configuration
 @EnableWebSecurity
@@ -40,6 +48,20 @@ public class SpringWebSecurityConfig extends WebSecurityConfigurerAdapter {
 //            ShaPasswordEncoder encoder = new ShaPasswordEncoder();
             auth.userDetailsService(userService).passwordEncoder(new BCryptPasswordEncoder());
 //            auth.userDetailsService(userService);
+	}
+	
+//	@Override
+//	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+//	    ObjectMapper mapper = new ObjectMapper();
+//	    mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+//	    converters.add(new MappingJackson2HttpMessageConverter(mapper));
+//	}
+	
+	@Bean
+	public Jackson2ObjectMapperBuilder jackson2ObjectMapperBuilder() {
+	    Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
+	    builder.featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+	    return builder;
 	}
 	
 //  //1. Default

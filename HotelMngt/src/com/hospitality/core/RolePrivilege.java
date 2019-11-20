@@ -3,7 +3,9 @@ package com.hospitality.core;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.hospitality.util.BaseEntity;
+import com.voodoodyne.jackson.jsog.JSOGGenerator;
 
 
 /**
@@ -13,6 +15,7 @@ import com.hospitality.util.BaseEntity;
 @Entity
 @Table(name="role_privilege")
 //@NamedQuery(name="RolePrivilege.findAll", query="SELECT r FROM RolePrivilege r")
+@JsonIdentityInfo(generator = JSOGGenerator.class)
 public class RolePrivilege extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 

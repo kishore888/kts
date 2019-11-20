@@ -5,6 +5,6 @@ import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 @EntityListeners(PrimaryKeyListener.class)
-public class BaseEntity {
+public class BaseEntity<T> extends AuditFields<T>{
 
 }

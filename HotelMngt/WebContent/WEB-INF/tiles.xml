@@ -79,6 +79,14 @@
 	<definition name="SessionClosed" extends="base.definition">
 		<put-attribute name="body" value="/sessionClosed.jsp" />
 	</definition>
+		
+	<definition name="HotelPaymentGateway" extends="base.definition">
+		<put-attribute name="body" value="/gateway/hotelPaymentGateway.jsp" />
+	</definition>
+	
+	<definition name="Reservation" extends="base.definition">
+		<put-attribute name="body" value="/Room/reservation.jsp" />
+	</definition>
 	
 	<!-- 	newly created -->
 	<definition name="ServersideRoomList" extends="base.definition">

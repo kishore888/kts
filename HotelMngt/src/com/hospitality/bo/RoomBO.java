@@ -10,7 +10,8 @@ import com.hospitality.dto.DataTableDTO;
 public interface RoomBO {
 
 	public void create(Room room);
-	public List<Room> retrieveRoomList();
+	public List<Room> retrieveRoomList(Hotel hotel) throws Exception;
 	public Map<String, Object> retrieveRoomsServersideDatatable(DataTableDTO dataTable, Hotel hotel) throws Exception;
+	public Room retrieveById(String roomId) throws Exception;
 
 }

@@ -1,5 +1,6 @@
 package com.hospitality.boimpl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,12 +38,13 @@ public class RoomBOImpl implements RoomBO{
 	}
 
 	@Override
-	public List<Room> retrieveRoomList() {
-		List<Room> roomList = null;
+	public List<Room> retrieveRoomList(Hotel hotel)throws Exception {
+		List<Room> roomList = new ArrayList<Room>();
 		try{
-			roomList = roomDAO.retrieveRoomList();
+			roomList = roomDAO.retrieveRoomList(hotel);
 		}catch(Exception e){
 			e.printStackTrace();
+			throw e;
 		}
 		return roomList;
 	}
@@ -58,6 +60,18 @@ public class RoomBOImpl implements RoomBO{
 			e.printStackTrace();
 		}
 		return roomMap;
+	}
+
+	@Override
+	public Room retrieveById(String roomId) throws Exception {
+		Room room = null;
+		try{
+			room = roomDAO.retrieveById(roomId);
+		}catch(Exception e){
+			e.printStackTrace();
+			throw e;
+		}
+		return room;
 	}
 
 }

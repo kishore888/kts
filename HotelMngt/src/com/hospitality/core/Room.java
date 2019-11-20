@@ -26,7 +26,7 @@ public class Room extends BaseEntity implements Serializable {
 	private String roomId;
 
 	@Column(name="room_number")
-	private int roomNumber;
+	private Integer roomNumber;
 
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="room_type_id")
@@ -40,13 +40,18 @@ public class Room extends BaseEntity implements Serializable {
 	private double roomCharges;
 	
 	@Column(name="max_no_of_adults")
-	private int maxNoOfAdults;
+	private Integer maxNoOfAdults;
 
 	@Column(name="max_no_of_kids")
-	private int maxNoOfKids;
+	private Integer maxNoOfKids;
 
 	@Column(name="status")
 	private String status;
+	
+	//bi-directional many-to-one association to Hotel
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="hotel_id")
+	private Hotel hotel;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="created_on")
@@ -66,83 +71,19 @@ public class Room extends BaseEntity implements Serializable {
 	}
 
 	public String getRoomId() {
-		return this.roomId;
+		return roomId;
 	}
 
 	public void setRoomId(String roomId) {
 		this.roomId = roomId;
 	}
 
-	public String getCreatedBy() {
-		return this.createdBy;
+	public Integer getRoomNumber() {
+		return roomNumber;
 	}
 
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public Date getCreatedOn() {
-		return this.createdOn;
-	}
-
-	public void setCreatedOn(Date createdOn) {
-		this.createdOn = createdOn;
-	}
-
-	public int getMaxNoOfAdults() {
-		return this.maxNoOfAdults;
-	}
-
-	public void setMaxNoOfAdults(int maxNoOfAdults) {
-		this.maxNoOfAdults = maxNoOfAdults;
-	}
-
-	public int getMaxNoOfKids() {
-		return this.maxNoOfKids;
-	}
-
-	public void setMaxNoOfKids(int maxNoOfKids) {
-		this.maxNoOfKids = maxNoOfKids;
-	}
-
-	public double getRoomCharges() {
-		return this.roomCharges;
-	}
-
-	public void setRoomCharges(double roomCharges) {
-		this.roomCharges = roomCharges;
-	}
-
-	public int getRoomNumber() {
-		return this.roomNumber;
-	}
-
-	public void setRoomNumber(int roomNumber) {
+	public void setRoomNumber(Integer roomNumber) {
 		this.roomNumber = roomNumber;
-	}
-
-	public String getStatus() {
-		return this.status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public String getUpdatedBy() {
-		return this.updatedBy;
-	}
-
-	public void setUpdatedBy(String updatedBy) {
-		this.updatedBy = updatedBy;
-	}
-
-	public Date getUpdatedOn() {
-		return this.updatedOn;
-	}
-
-	public void setUpdatedOn(Date updatedOn) {
-		this.updatedOn = updatedOn;
 	}
 
 	public RoomType getRoomType() {
@@ -159,6 +100,78 @@ public class Room extends BaseEntity implements Serializable {
 
 	public void setHotelPlanMaster(HotelPlanMaster hotelPlanMaster) {
 		this.hotelPlanMaster = hotelPlanMaster;
+	}
+
+	public double getRoomCharges() {
+		return roomCharges;
+	}
+
+	public void setRoomCharges(double roomCharges) {
+		this.roomCharges = roomCharges;
+	}
+
+	public Integer getMaxNoOfAdults() {
+		return maxNoOfAdults;
+	}
+
+	public void setMaxNoOfAdults(Integer maxNoOfAdults) {
+		this.maxNoOfAdults = maxNoOfAdults;
+	}
+
+	public Integer getMaxNoOfKids() {
+		return maxNoOfKids;
+	}
+
+	public void setMaxNoOfKids(Integer maxNoOfKids) {
+		this.maxNoOfKids = maxNoOfKids;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Hotel getHotel() {
+		return hotel;
+	}
+
+	public void setHotel(Hotel hotel) {
+		this.hotel = hotel;
+	}
+
+	public Date getCreatedOn() {
+		return createdOn;
+	}
+
+	public void setCreatedOn(Date createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+	public Date getUpdatedOn() {
+		return updatedOn;
+	}
+
+	public void setUpdatedOn(Date updatedOn) {
+		this.updatedOn = updatedOn;
 	}
 
 }

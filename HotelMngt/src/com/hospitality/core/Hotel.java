@@ -3,8 +3,12 @@ package com.hospitality.core;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hospitality.util.BaseEntity;
+import com.voodoodyne.jackson.jsog.JSOGGenerator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -15,6 +19,7 @@ import java.util.List;
 @Entity
 @Table(name="hotel")
 //@NamedQuery(name="Hotel.findAll", query="SELECT h FROM Hotel h")
+@JsonIdentityInfo(generator = JSOGGenerator.class)
 public class Hotel extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -53,12 +58,14 @@ public class Hotel extends BaseEntity implements Serializable {
 	private String street;
 
 	//bi-directional many-to-one association to Role
+	@JsonIgnore
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="hotel")
-	private List<Role> roles;
+	private List<Role> roles = new ArrayList<>();
 
 	//bi-directional many-to-one association to User
+	@JsonIgnore
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="hotel")
-	private List<Users> users;
+	private List<Users> users = new ArrayList<>();
 
 	public Hotel() {
 	}

@@ -1,11 +1,13 @@
 package com.hospitality.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -16,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.hospitality.bo.HotelPaymentGatewayBO;
 import com.hospitality.bo.HotelPlanMasterBO;
 import com.hospitality.bo.RoomBO;
 import com.hospitality.bo.RoomTypeBO;
 import com.hospitality.core.Hotel;
+import com.hospitality.core.HotelPaymentGateway;
 import com.hospitality.core.HotelPlanMaster;
 import com.hospitality.core.Room;
 import com.hospitality.core.RoomType;
@@ -38,6 +42,9 @@ public class RoomController {
 	
 	@Autowired
 	private HotelPlanMasterBO hotelPlanMasterBO;
+	
+	@Autowired
+	private HotelPaymentGatewayBO hotelPaymentGatewayBO;
 	
 	@RequestMapping(value="showCreateRoom",method = RequestMethod.GET)
 	public ModelAndView showCreateRoom(){
@@ -63,21 +70,30 @@ public class RoomController {
 	}
 	
 	@RequestMapping(value="retrieveRoomList",method = RequestMethod.GET)
-	public ModelAndView retrieveList(Room room){
-		List<Room> roomList = null;
+	public ModelAndView retrieveList(Hotel hotel, HttpSession session){
+		List<Room> roomList = new ArrayList<>();
+		List<HotelPaymentGateway> hotelPaymentGatewayList = new ArrayList<>();
 		try{
-			roomList = roomBO.retrieveRoomList();
+			if(hotel == null) {
+				hotel = (Hotel)session.getAttribute("hotelObj");
+			}else if(StringUtils.isBlank(hotel.getHotelId())) {
+				hotel = (Hotel)session.getAttribute("hotelObj");
+			}
+			roomList = roomBO.retrieveRoomList(hotel);
+			hotelPaymentGatewayList = hotelPaymentGatewayBO.retrieveActiveGatewayListByHotel(hotel);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return new ModelAndView("RoomList").addObject("roomList", roomList);
+		return new ModelAndView("RoomList", "roomList", roomList).addObject("hotelPaymentGatewayList", hotelPaymentGatewayList);
 	}
 	
 	@RequestMapping(value="retrieveRoomListServersideDatatable",method = RequestMethod.GET)
-	public ModelAndView retrieveRoomListServersideDatatable(DataTableDTO dataTable){
-		List<Room> roomList = null;
+	public ModelAndView retrieveRoomListServersideDatatable(DataTableDTO dataTable, HttpSession session){
+		List<Room> roomList = new ArrayList<>();
+		Hotel hotel = null;
 		try{
-			roomList = roomBO.retrieveRoomList();
+			hotel = (Hotel)session.getAttribute("hotelObj");
+			roomList = roomBO.retrieveRoomList(hotel);
 //			roomList = roomBO.retrieveRoomListServersideDatatable();
 		}catch(Exception e){
 			e.printStackTrace();
