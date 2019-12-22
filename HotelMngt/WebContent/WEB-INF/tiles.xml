@@ -28,7 +28,7 @@
 		<put-attribute name="body" value="/Room/showCreateRoomType.jsp" />
 	</definition>
 	
-	<definition name="showCreateRoom" extends="base.definition">
+	<definition name="CreateRoom" extends="base.definition">
 		<put-attribute name="body" value="/Room/showCreateRoom.jsp" />
 	</definition>
 	
@@ -86,6 +86,14 @@
 	
 	<definition name="Reservation" extends="base.definition">
 		<put-attribute name="body" value="/Room/reservation.jsp" />
+	</definition>
+	
+	<definition name="CreatePaymentAccount" extends="base.definition">
+		<put-attribute name="body" value="/hotel/createPaymentAccount.jsp" />
+	</definition>
+	
+	<definition name="CreateFinancialYear" extends="base.definition">
+		<put-attribute name="body" value="/hotel/createFinancialYear.jsp" />
 	</definition>
 	
 	<!-- 	newly created -->

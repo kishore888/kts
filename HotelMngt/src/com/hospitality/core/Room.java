@@ -37,7 +37,7 @@ public class Room extends BaseEntity implements Serializable {
 	private HotelPlanMaster hotelPlanMaster;
 
 	@Column(name="room_charges")
-	private double roomCharges;
+	private Double roomCharges;
 	
 	@Column(name="max_no_of_adults")
 	private Integer maxNoOfAdults;
@@ -48,25 +48,15 @@ public class Room extends BaseEntity implements Serializable {
 	@Column(name="status")
 	private String status;
 	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="payment_account_id")
+	private PaymentAccount paymentAccount;
+	
 	//bi-directional many-to-one association to Hotel
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="hotel_id")
 	private Hotel hotel;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="created_on")
-	private Date createdOn;
-	
-	@Column(name="created_by")
-	private String createdBy;
-
-	@Column(name="updated_by")
-	private String updatedBy;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="updated_on")
-	private Date updatedOn;
-
 	public Room() {
 	}
 
@@ -102,11 +92,11 @@ public class Room extends BaseEntity implements Serializable {
 		this.hotelPlanMaster = hotelPlanMaster;
 	}
 
-	public double getRoomCharges() {
+	public Double getRoomCharges() {
 		return roomCharges;
 	}
 
-	public void setRoomCharges(double roomCharges) {
+	public void setRoomCharges(Double roomCharges) {
 		this.roomCharges = roomCharges;
 	}
 
@@ -142,36 +132,12 @@ public class Room extends BaseEntity implements Serializable {
 		this.hotel = hotel;
 	}
 
-	public Date getCreatedOn() {
-		return createdOn;
+	public PaymentAccount getPaymentAccount() {
+		return paymentAccount;
 	}
 
-	public void setCreatedOn(Date createdOn) {
-		this.createdOn = createdOn;
-	}
-
-	public String getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public String getUpdatedBy() {
-		return updatedBy;
-	}
-
-	public void setUpdatedBy(String updatedBy) {
-		this.updatedBy = updatedBy;
-	}
-
-	public Date getUpdatedOn() {
-		return updatedOn;
-	}
-
-	public void setUpdatedOn(Date updatedOn) {
-		this.updatedOn = updatedOn;
+	public void setPaymentAccount(PaymentAccount paymentAccount) {
+		this.paymentAccount = paymentAccount;
 	}
 
 }

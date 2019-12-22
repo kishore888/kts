@@ -52,6 +52,10 @@ public class Transaction extends BaseEntity implements Serializable {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="hotel_id")
 	private Hotel hotel;
+	
+	@OneToOne
+	@JoinColumn(name="payment_details_id")
+	private PaymentDetails paymentDetails;
 
 	public Transaction() {
 	}
@@ -142,6 +146,14 @@ public class Transaction extends BaseEntity implements Serializable {
 
 	public void setHotel(Hotel hotel) {
 		this.hotel = hotel;
+	}
+
+	public PaymentDetails getPaymentDetails() {
+		return paymentDetails;
+	}
+
+	public void setPaymentDetails(PaymentDetails paymentDetails) {
+		this.paymentDetails = paymentDetails;
 	}
 
 }

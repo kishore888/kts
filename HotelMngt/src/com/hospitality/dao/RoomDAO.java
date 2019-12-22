@@ -9,4 +9,6 @@ public interface RoomDAO extends GenericDAO<Room>{
 
 	public List<Room> retrieveRoomList(Hotel hotel) throws Exception;
 
+	public Room retrieveByRoomId(String roomId) throws Exception;
+
 }

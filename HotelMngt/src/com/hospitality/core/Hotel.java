@@ -56,6 +56,9 @@ public class Hotel extends BaseEntity implements Serializable {
 	
 	@Column(name="street")
 	private String street;
+	
+	@Column(name="current_financial_year_id")
+	private String currentFinancialYearId;
 
 	//bi-directional many-to-one association to Role
 	@JsonIgnore
@@ -178,6 +181,14 @@ public class Hotel extends BaseEntity implements Serializable {
 		role.setHotel(null);
 
 		return role;
+	}
+
+	public String getCurrentFinancialYearId() {
+		return currentFinancialYearId;
+	}
+
+	public void setCurrentFinancialYearId(String currentFinancialYearId) {
+		this.currentFinancialYearId = currentFinancialYearId;
 	}
 
 	public List<Users> getUsers() {

@@ -11,7 +11,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.hospitality.bo.HotelBO;
+import com.hospitality.core.FinancialYear;
 import com.hospitality.core.Hotel;
+import com.hospitality.core.PaymentAccount;
+import com.hospitality.dao.FinancialYearDAO;
 import com.hospitality.dao.HotelDAO;
 
 /**
@@ -24,6 +27,9 @@ public class HotelBOImpl implements HotelBO{
 
 	@Autowired
 	private HotelDAO hotelDAO;
+	
+	@Autowired
+	private FinancialYearDAO financialYearDAO;
 	
 	@Override
 	public void create(Hotel hotel) {
@@ -58,6 +64,20 @@ public class HotelBOImpl implements HotelBO{
 			e.printStackTrace();
 		}
 		return hotel;
+	}
+
+	@Override
+	public String generateBillNo(Hotel hotel, PaymentAccount paymentAccount) throws Exception {
+		String billNo = "";
+		FinancialYear financialYear = null;
+		try{
+			financialYear = financialYearDAO.retrieveById(hotel.getCurrentFinancialYearId());
+			billNo = "HMT"+paymentAccount.getCode()+financialYear.getYearName().replace("-", "")+paymentAccount.getBillCount();
+		}catch(Exception e){
+			e.printStackTrace();
+			throw e;
+		}
+		return billNo;
 	}
 
 }

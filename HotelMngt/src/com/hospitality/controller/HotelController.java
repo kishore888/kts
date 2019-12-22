@@ -4,6 +4,7 @@
 
 package com.hospitality.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +29,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hospitality.bo.FinancialYearBO;
 import com.hospitality.bo.HotelBO;
+import com.hospitality.core.FinancialYear;
 import com.hospitality.core.Hotel;
 
 /**
@@ -42,26 +45,31 @@ public class HotelController {
 	@Autowired
 	private HotelBO hotelBO;
 	
-	@RequestMapping(value="showCreateHotel",method = RequestMethod.GET)
+	@Autowired
+	private FinancialYearBO financialYearBO;
+	
+	@RequestMapping(value="create",method = RequestMethod.GET)
 	public ModelAndView showCreateHotel(HttpSession httpSession){
 		Hotel hotel = null;
+		List<FinancialYear> financialYearList = new ArrayList<>();
 		try{
-			hotel = (Hotel) httpSession.getAttribute("hotel");
-			
+			hotel = (Hotel) httpSession.getAttribute("hotelObj");
+			financialYearList = financialYearBO.retrieveList();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return new ModelAndView("CreateHotel").addObject("hotel", hotel);
+		return new ModelAndView("CreateHotel", "hotel", hotel).addObject("financialYearList", financialYearList);
 	}
 			
 	@RequestMapping(value="create",method = RequestMethod.POST)
-	public ModelAndView create(Hotel hotel){
+	public ModelAndView create(Hotel hotel, HttpSession httpSession){
 		try{
 			hotelBO.create(hotel);
+			httpSession.setAttribute("hotelObj", hotel);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return new ModelAndView("redirect:showCreateHotel?hotelId="+hotel.getHotelId());
+		return new ModelAndView("redirect:create?hotelId="+hotel.getHotelId());
 	}
 	
 	@RequestMapping(value="retrieveHotelList",method = RequestMethod.GET)

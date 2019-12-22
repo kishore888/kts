@@ -33,6 +33,7 @@ public class HotelDAOImpl extends GenericDAOImpl<Hotel> implements HotelDAO{
 			
 		}catch(Exception e) {
 			e.printStackTrace();
+			throw e;
 		}
 		return hotel;
 	}

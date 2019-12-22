@@ -8,8 +8,10 @@
 
 <style>
 	#my_camera{
-	 width: 220px;
-	 height: 196px;
+/* 	 width: 220px; */
+	 height: 120px;
+	 width: 100%;
+/*     height: auto; */
 	 border: 1px solid #c8b9b9;
 	}
 </style>
@@ -18,7 +20,8 @@
 <section class="content">
 
         <!-- left column -->
-<!--         <div class="col-md-12"> -->
+        <div class="col-md-12">
+<!--         <div class="col-md-8"> -->
     <form role="form" id="" name="" action="reservation/create" method="POST">
        <input type="hidden" name="room.roomId" value="${room.roomId}">
        <input type="hidden" name="customerImage" id="customer_image" value="${reservation.room.roomId}">
@@ -68,7 +71,7 @@
 <%-- 		                	<img id="imageprev" width="360" height="260" src="${reservation.path}"> --%>
 		                </div>
 						<input type=button value="WebCam" onClick="initializeWebCam()">
-						<input type=button value="Take Snapshot" onClick="take_snapshot()">
+						<input type=button value="Snapshot" onClick="take_snapshot()">
 					</div>
 				</div>
 				<div class="col-md-12">
@@ -129,8 +132,7 @@
 	                <div class='col-md-4'>
 				      <div class="form-group">
 				        <div class='input-group'>
-				          <input type='text' class="form-control datetimepicker" name="startDate" <fmt:formatDate value="${reservation.startDate}" pattern="yyyy-MM-dd" />
-				          />
+				          <input type='text' class="form-control datetimepicker" name="startDate" value="<fmt:formatDate value="${reservation.startDate}" pattern="yyyy-MM-dd" />"/>
 				          <span class="input-group-addon">
 				            <span class="glyphicon glyphicon-calendar"></span>
 				          </span>
@@ -140,8 +142,7 @@
 				    <div class='col-md-4'>
 				      <div class="form-group">
 				        <div class='input-group'>
-				          <input type='text' class="form-control datetimepicker" name="endDate" <fmt:formatDate value="${reservation.endDate}" pattern="yyyy-MM-dd" />
-				          />
+				          <input type='text' class="form-control datetimepicker" name="endDate" value="<fmt:formatDate value="${reservation.endDate}" pattern="yyyy-MM-dd" />"/>
 				          <span class="input-group-addon">
 				            <span class="glyphicon glyphicon-calendar"></span>
 				          </span>
@@ -149,6 +150,34 @@
 				      </div>
 				    </div>
 	            </div>
+	            <div class="col-md-12">
+	                <div class="col-md-4">
+	                	<div class="form-group">
+		                  <label for="amount">Amount</label>
+		                  <input type="text" class="form-control" id="amount" name="amount" value="${room.roomCharges}" placeholder="Amount">
+		                </div>
+	                </div>
+	                <div class="col-md-4">
+	                	<div class="form-group">
+		                  <label for="totalAmount">Total Amount</label>
+		                  <input type="text" class="form-control" id="totalAmount" name="totalAmount" value="" placeholder="Total Amount">
+		                </div>
+	                </div>
+	            </div>
+	            <div class="col-md-12">
+	                	<div class="form-group">
+	                		  <label>
+							  	<input type="radio" name="paymentType" value="CASH" checked="">
+							  	Cash
+							  </label>
+	                	<c:forEach items="${hotelPaymentGatewayList}" var="hotelPaymentGateway">
+			                  <label>
+							  	<input type="radio" name="paymentType" value="${hotelPaymentGateway.paymentGateway.paymentGatewayId}">
+							  	${hotelPaymentGateway.paymentGateway.paymentGatewayName}
+							  </label>
+						  </c:forEach>
+		                </div>
+                </div>
                 
               </div>
               <!-- /.box-body -->
@@ -164,6 +193,48 @@
           <!-- /.box -->
 
 		</form>
+		
+<!-- 	</div> -->
+<!-- 	<div class="col-md-4"> -->
+<!-- 	<form role="form" id="" name="" action="hotelPaymentGateway/pay" method="POST"> -->
+<%--        <input type="hidden" name="room.roomId" value="${room.roomId}"> --%>
+<%--        <input type="hidden" name="hotel.hotelId" value="${sessionScope.hotelObj.hotelId}"> --%>
+<%--        <input type="hidden" name="amount" value="${room.roomId}"> --%>
+       
+<!-- 		<div class="box box-primary"> -->
+<!--             <div class="box-header with-border"> -->
+<!--               <h3 class="box-title">Payment</h3> -->
+<!--             </div> -->
+<!--               <div class="box-body"> -->
+<!--               <table> -->
+<!--               	<tbody> -->
+<!--               		<tr> -->
+<!--               			<td>Amount</td> -->
+<!--               			<td style="text-align:right;">4000</td> -->
+<!--               		</tr> -->
+<!--               		<tr> -->
+<!--               			<td>Total Amount</td> -->
+<!--               			<td style="text-align:right;">6000</td> -->
+<!--               		</tr> -->
+<!--               	</tbody> -->
+<!--               </table> -->
+                
+<!--               </div> -->
+<!--               /.box-body -->
+
+<!--               <div class="box-footer"> -->
+<!--                 <div align="center"> -->
+<!-- 	                <button type="submit" class="btn btn-primary">Submit</button> -->
+<!-- 	                <input type="button" class="btn btn-warning" value="Back" onclick="history.go(-1);"/> -->
+<!--                 </div> -->
+<!--               </div> -->
+            
+<!--           </div> -->
+<!--           /.box -->
+          
+<!--           </form> -->
+<!-- 	</div> -->
+</div>
 		
 </section>
 </div>
@@ -186,8 +257,8 @@ $(document).ready(function() {
 <!-- Configure a few settings and attach camera -->
 <script language="JavaScript">
  Webcam.set({
-  width: 220,
-  height: 196,
+//   width: 180,
+  height: 120,
   image_format: 'jpeg',
   jpeg_quality: 90
  });

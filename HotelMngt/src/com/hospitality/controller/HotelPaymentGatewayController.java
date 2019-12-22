@@ -30,6 +30,7 @@ import com.hospitality.bo.TransactionBO;
 import com.hospitality.core.Hotel;
 import com.hospitality.core.HotelPaymentGateway;
 import com.hospitality.core.PaymentGateway;
+import com.hospitality.core.Reservation;
 
 /**
 * @author  #Kishore
@@ -126,7 +127,7 @@ public class HotelPaymentGatewayController extends commonController{
 	
 	@RequestMapping(value="payU",method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
 	@ResponseBody
-	public String payU(HotelPaymentGateway hotelPaymentGateway, HttpSession session, HttpServletResponse response){
+	public String payU(HotelPaymentGateway hotelPaymentGateway, Reservation reservation, HttpSession session, HttpServletResponse response){
 		Hotel hotel = null;
 		String str = "";
 		try{

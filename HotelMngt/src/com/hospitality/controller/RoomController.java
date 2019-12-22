@@ -20,11 +20,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hospitality.bo.HotelPaymentGatewayBO;
 import com.hospitality.bo.HotelPlanMasterBO;
+import com.hospitality.bo.PaymentAccountBO;
 import com.hospitality.bo.RoomBO;
 import com.hospitality.bo.RoomTypeBO;
 import com.hospitality.core.Hotel;
 import com.hospitality.core.HotelPaymentGateway;
 import com.hospitality.core.HotelPlanMaster;
+import com.hospitality.core.PaymentAccount;
 import com.hospitality.core.Room;
 import com.hospitality.core.RoomType;
 import com.hospitality.dto.DataTableDTO;
@@ -46,17 +48,28 @@ public class RoomController {
 	@Autowired
 	private HotelPaymentGatewayBO hotelPaymentGatewayBO;
 	
-	@RequestMapping(value="showCreateRoom",method = RequestMethod.GET)
-	public ModelAndView showCreateRoom(){
+	@Autowired
+	private PaymentAccountBO paymentAccountBO;
+	
+	@RequestMapping(value="create",method = RequestMethod.GET)
+	public ModelAndView showCreateRoom(String roomId, HttpSession session){
+		Room room = null;
+		Hotel hotel = null;
 		List<RoomType> roomTypeList = null;
-		List<HotelPlanMaster> hotelPlanMasterList = null;
+		List<HotelPlanMaster> hotelPlanMasterList = new ArrayList<>();
+		List<PaymentAccount> paymentAccountList = new ArrayList<>();
 		try{
+			hotel = (Hotel)session.getAttribute("hotelObj");
+			if(StringUtils.isNotBlank(roomId)) {
+				room = roomBO.retrieveByRoomId(roomId);
+			}
 			roomTypeList = roomTypeBO.retrieveListByYear();
 			hotelPlanMasterList = hotelPlanMasterBO.retrieveListByYear();
+			paymentAccountList = paymentAccountBO.retrieveListByHotel(hotel);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return new ModelAndView("showCreateRoom").addObject("roomTypeList", roomTypeList).addObject("hotelPlanMasterList", hotelPlanMasterList);
+		return new ModelAndView("CreateRoom", "roomTypeList", roomTypeList).addObject("room", room).addObject("hotelPlanMasterList", hotelPlanMasterList).addObject("paymentAccountList", paymentAccountList);
 	}
 	
 	@RequestMapping(value="create",method = RequestMethod.POST)
@@ -66,7 +79,7 @@ public class RoomController {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return new ModelAndView("showCreateRoom").addObject("room", room);
+		return new ModelAndView("redirect:create?roomId="+room.getRoomId());
 	}
 	
 	@RequestMapping(value="retrieveRoomList",method = RequestMethod.GET)

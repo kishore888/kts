@@ -74,4 +74,16 @@ public class RoomBOImpl implements RoomBO{
 		return room;
 	}
 
+	@Override
+	public Room retrieveByRoomId(String roomId) throws Exception {
+		Room room = null;
+		try{
+			room = roomDAO.retrieveByRoomId(roomId);
+		}catch(Exception e){
+			e.printStackTrace();
+			throw e;
+		}
+		return room;
+	}
+
 }

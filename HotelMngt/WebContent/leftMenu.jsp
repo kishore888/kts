@@ -28,19 +28,21 @@
         
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Hotel</span>
+            <i class="fa fa-building"></i> <span>Hotel</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="hotel/showCreateHotel"><i class="fa fa-circle-o"></i> Add Hotel</a></li>
+            <li><a href="hotel/create"><i class="fa fa-circle-o"></i> Add Hotel</a></li>
             <li><a href="hotelPaymentGateway/create"><i class="fa fa-circle-o"></i> Payment Gateway</a></li>
+            <li><a href="paymentAccount/create"><i class="fa fa-circle-o"></i> Payment Account</a></li>
+            <li><a href="financialYear/create"><i class="fa fa-circle-o"></i> Financial Year</a></li>
           </ul>
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Room</span>
+            <i class="fa fa-hotel"></i> <span>Room</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -48,7 +50,7 @@
           <ul class="treeview-menu">
             <li><a href="hotelPlanMaste/showCreatePlan"><i class="fa fa-circle-o"></i> Add Hotel Plan Master</a></li>
             <li><a href="hotelPlanMaste/retrieveHotelPlanMasterList"><i class="fa fa-circle-o"></i> Hotel Plan Master List</a></li>
-            <li><a href="room/showCreateRoom"><i class="fa fa-circle-o"></i> Add Room</a></li>
+            <li><a href="room/create"><i class="fa fa-circle-o"></i> Add Room</a></li>
             <li><a href="room/retrieveRoomList"><i class="fa fa-circle-o"></i> Room List</a></li>
             <li><a href="roomType/showCreateRoomType"><i class="fa fa-circle-o"></i> Add Room Type</a></li>
             <li><a href="roomType/retrieveRoomTypeList"><i class="fa fa-circle-o"></i> Room Type List</a></li>
@@ -56,7 +58,7 @@
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Employee</span>
+            <i class="fa fa-user"></i> <span>Employee</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -68,7 +70,7 @@
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Mailbox</span>
+            <i class="fa fa-envelope"></i> <span>Mailbox</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -94,7 +96,7 @@
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Settings</span>
+            <i class="fa fa-cog"></i> <span>Settings</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>

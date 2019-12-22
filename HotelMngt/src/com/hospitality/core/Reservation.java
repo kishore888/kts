@@ -47,9 +47,22 @@ public class Reservation extends BaseEntity implements Serializable {
 	@Column(name="path")
 	private String path;
 	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="payment_account_id")
+	private PaymentAccount paymentAccount;
+	
 	@Transient
 	private String customerImage;
+	
+	@Transient
+	private Float amount = 0.0f;
+	
+	@Transient
+	private Float totalAmount = 0.0f;
 
+	@Transient
+	private String paymentType;
+	
 	public Reservation() {
 	}
 
@@ -107,6 +120,38 @@ public class Reservation extends BaseEntity implements Serializable {
 
 	public void setCustomerImage(String customerImage) {
 		this.customerImage = customerImage;
+	}
+
+	public Float getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Float amount) {
+		this.amount = amount;
+	}
+
+	public Float getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(Float totalAmount) {
+		this.totalAmount = totalAmount;
+	}
+
+	public String getPaymentType() {
+		return paymentType;
+	}
+
+	public void setPaymentType(String paymentType) {
+		this.paymentType = paymentType;
+	}
+
+	public PaymentAccount getPaymentAccount() {
+		return paymentAccount;
+	}
+
+	public void setPaymentAccount(PaymentAccount paymentAccount) {
+		this.paymentAccount = paymentAccount;
 	}
 
 }

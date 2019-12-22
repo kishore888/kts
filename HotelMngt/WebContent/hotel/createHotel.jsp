@@ -69,11 +69,21 @@
 	                  <input type="text" class="form-control" id="state" name="state" value="${hotel.state}" placeholder="Enter State">
 	                </div>
                 </div>
-	                <div class="col-md-6">
+                <div class="col-md-6">
 	                <div class="form-group">
 	                  <label for="pincode">Pincode</label>
 	                  <input type="text" class="form-control" id="pincode" name="pincode" value="${hotel.pincode}" placeholder="Enter Pincode">
 	                </div>
+                </div>
+                <div class="col-md-6">
+	                <div class="form-group">
+	                		  <label>Financial Year</label>
+	                	<c:forEach items="${financialYearList}" var="financialYear">
+			                  <select class="form-control" name="currentFinancialYearId" id="">
+			                  	<option value="${financialYear.financialYearId}" ${financialYear.financialYearId==hotel.currentFinancialYearId?'selected':''}>${financialYear.yearName}</option>
+			                  </select>
+						  </c:forEach>
+		                </div>
                 </div>
               </div>
               <!-- /.box-body -->

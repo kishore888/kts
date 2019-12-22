@@ -24,7 +24,7 @@ import com.hospitality.core.Transaction;
 public class TransactionController extends commonController{
 	
 	@Autowired
-	private TransactionBO TransactionBO;
+	private TransactionBO transactionBO;
 	
 	@RequestMapping(value="showCreateTransaction",method = RequestMethod.GET)
 	public ModelAndView showCreateTransaction(){
@@ -38,7 +38,7 @@ public class TransactionController extends commonController{
 	@RequestMapping(value="create",method = RequestMethod.POST)
 	public ModelAndView create(Transaction Transaction){
 		try{
-			TransactionBO.create(Transaction);
+			transactionBO.create(Transaction);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -49,7 +49,7 @@ public class TransactionController extends commonController{
 	public ModelAndView retrieveList(Transaction Transaction){
 		List<Transaction> TransactionList = null;
 		try{
-			TransactionList = TransactionBO.retrieveList();
+			TransactionList = transactionBO.retrieveList();
 		}catch(Exception e){
 			e.printStackTrace();
 		}

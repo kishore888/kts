@@ -32,4 +32,21 @@ public class RoomDAOImpl extends GenericDAOImpl<Room> implements RoomDAO{
 		return roomList;
 	}
 
+	@Override
+	public Room retrieveByRoomId(String roomId) throws Exception {
+		Room room = null;
+		try{
+			String queryString = "Select r from Room r join fetch r.roomType join fetch r.hotelPlanMaster join fetch r.paymentAccount join fetch r.hotel h where r.roomId=:roomId";
+			Query query = entityManager.createQuery(queryString);
+			query.setParameter("roomId", roomId);
+			if(query.getResultList().size() > 0) {
+				room = (Room) query.getSingleResult();
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			throw e;
+		}
+		return room;
+	}
+
 }
