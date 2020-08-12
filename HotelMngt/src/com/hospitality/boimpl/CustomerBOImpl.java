@@ -49,4 +49,16 @@ public class CustomerBOImpl implements CustomerBO{
 		return customerList;
 	}
 
+	@Override
+	public Customer retrieveById(String customerId) throws Exception {
+		Customer customer = null;
+		try{
+			customer = customerDAO.retrieveById(customerId);
+		}catch(Exception e){
+			e.printStackTrace();
+			throw e;
+		}
+		return customer;
+	}
+
 }

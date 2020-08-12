@@ -96,6 +96,12 @@
 		<put-attribute name="body" value="/hotel/createFinancialYear.jsp" />
 	</definition>
 	
+	<definition name="PaymentDashboard" extends="base.definition">
+		<put-attribute name="body" value="/payment/paymentDashboard.jsp" />
+	</definition>
+	
+	<definition name="PayUErr" template="/payment/payUErr.jsp" />
+	
 	<!-- 	newly created -->
 	<definition name="ServersideRoomList" extends="base.definition">
 		<put-attribute name="body" value="/Room/retrieveServersideRoomList.jsp" />

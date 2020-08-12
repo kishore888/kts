@@ -86,4 +86,16 @@ public class RoomBOImpl implements RoomBO{
 		return room;
 	}
 
+	@Override
+	public List<Room> retrieveListByIds(List<String> roomIdList) throws Exception {
+		List<Room> roomList = new ArrayList<Room>();
+		try{
+			roomList = roomDAO.retrieveListByIds(roomIdList);
+		}catch(Exception e){
+			e.printStackTrace();
+			throw e;
+		}
+		return roomList;
+	}
+
 }

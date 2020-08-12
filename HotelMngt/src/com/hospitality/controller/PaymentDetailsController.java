@@ -27,7 +27,7 @@ public class PaymentDetailsController extends commonController{
 	@Autowired
 	private PaymentDetailsBO paymentDetailsBO;
 	
-	@RequestMapping(value="showCreatePaymentDetails",method = RequestMethod.GET)
+	@RequestMapping(value="create",method = RequestMethod.GET)
 	public ModelAndView showCreatePaymentDetails(){
 		try{
 		}catch(Exception e){
@@ -57,4 +57,12 @@ public class PaymentDetailsController extends commonController{
 		return new ModelAndView("paymentDetailsList").addObject("paymentDetailsList", paymentDetailsList);
 	}
 	
+	@RequestMapping(value="dashboard",method = RequestMethod.GET)
+	public ModelAndView dashboard(){
+		try{
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return new ModelAndView("PaymentDashboard");
+	}
 }

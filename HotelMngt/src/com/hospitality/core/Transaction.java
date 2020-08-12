@@ -5,7 +5,9 @@ import javax.persistence.*;
 
 import com.hospitality.util.BaseEntity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -56,6 +58,17 @@ public class Transaction extends BaseEntity implements Serializable {
 	@OneToOne
 	@JoinColumn(name="payment_details_id")
 	private PaymentDetails paymentDetails;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="customer_id")
+	private Customer customer;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="payment_account_id")
+	private PaymentAccount paymentAccount;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "transaction")
+    private List<TransactionDetails> transactionDetailsList = new ArrayList<>(0);
 
 	public Transaction() {
 	}
@@ -154,6 +167,30 @@ public class Transaction extends BaseEntity implements Serializable {
 
 	public void setPaymentDetails(PaymentDetails paymentDetails) {
 		this.paymentDetails = paymentDetails;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	public List<TransactionDetails> getTransactionDetailsList() {
+		return transactionDetailsList;
+	}
+
+	public PaymentAccount getPaymentAccount() {
+		return paymentAccount;
+	}
+
+	public void setPaymentAccount(PaymentAccount paymentAccount) {
+		this.paymentAccount = paymentAccount;
+	}
+
+	public void setTransactionDetailsList(List<TransactionDetails> transactionDetailsList) {
+		this.transactionDetailsList = transactionDetailsList;
 	}
 
 }

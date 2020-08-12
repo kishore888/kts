@@ -58,7 +58,7 @@
 			                  <td>${room.maxNoOfKids}</td>
 			                  <td>${room.status}</td>
 			                  <td>
-			                    <a href="reservation/bookRoom?roomId=${room.roomId}" role="button" class="btn btn-warning">Book</a>
+			                    <a href="reservation/bookRoom?roomIds=${room.roomId}" role="button" class="btn btn-warning">Book</a>
 			                    <a href="room/create?roomId=${room.roomId}" role="button" class="btn btn-success"><i class="fa fa-edit"></i></a>
 <!-- 			                  	<button type="button" class="btn btn-success" data-role="button" data-toggle="modal" data-target="#paymentModel" -->
 <%-- 			                  	 id="book-button" data-roomId="${room.roomId}" data-roomno="${room.roomNumber}" data-roomcharges="${room.roomCharges}">Book</button> --%>

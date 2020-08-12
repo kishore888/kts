@@ -6,6 +6,8 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js" integrity="sha256-dHf/YjH1A4tewEsKUSmNnV05DDbfGN3g7NMq86xgGh8=" crossorigin="anonymous"></script>
+
 <style>
 	#my_camera{
 /* 	 width: 220px; */
@@ -22,9 +24,10 @@
         <!-- left column -->
         <div class="col-md-12">
 <!--         <div class="col-md-8"> -->
-    <form role="form" id="" name="" action="reservation/create" method="POST">
-       <input type="hidden" name="room.roomId" value="${room.roomId}">
-       <input type="hidden" name="customerImage" id="customer_image" value="${reservation.room.roomId}">
+    <form role="form" data-toggle="validator" id="reservationform" name="" action="reservation/create" method="POST">
+       <input type="hidden" name="customerId" value="${customer.customerId}">
+       <input type="hidden" name="customerImage" id="customer_image" value="${customer.customerImage}">
+       <input type="hidden" class="form-control" name="paymentAccountId" value="${paymentAccount.paymentAccountId}">
               
           <div class="box box-primary">
             <div class="box-header with-border">
@@ -35,40 +38,40 @@
 		              <div class="col-md-4">
 		                <div class="form-group">
 		                  <label for="firstName">First Name</label>
-		                  <input type="text" class="form-control" id="firstName" name="customer.firstName" value="${reservation.customer.firstName}" placeholder="First Name">
+		                  <input type="text" class="form-control" id="firstName" name="firstName" value="${customer.firstName}" placeholder="First Name" required>
 		                </div>
 		                <div class="form-group">
 		                  <label for="lastName">Last Name</label>
-		                  <input type="text" class="form-control" id="lastName" name="customer.lastName" value="${reservation.customer.lastName}" placeholder="Last Name">
+		                  <input type="text" class="form-control" id="lastName" name="lastName" value="${customer.lastName}" placeholder="Last Name" required>
 		                </div>
 		                <div class="form-group">
 		                  <label for="phoneNo1">Phone No1</label>
-		                  <input type="text" class="form-control" id="phoneNo1" name="customer.phoneNo1" value="${reservation.customer.phoneNo1}" placeholder="phoneNo1">
+		                  <input type="text" class="form-control" id="phoneNo1" name="phoneNo1" value="${customer.phoneNo1}" placeholder="phoneNo1" required>
 		                </div>
 		              </div>
 		              <div class="col-md-4">
 		                <div class="form-group">
 		                  <label for="middleName">Middle Name</label>
-		                  <input type="text" class="form-control" id="middleName" name="customer.middleName" value="${reservation.customer.middleName}" placeholder="Middle Name">
+		                  <input type="text" class="form-control" id="middleName" name="middleName" value="${customer.middleName}" placeholder="Middle Name">
 		                </div>
 		                <div class="form-group">
 		                  <label for="gender">Gender</label>
-		                  <select class="form-control" id="gender" name="customer.gender">
-		                  	<option> --Select--</option>
-		                  		<option value="Male" ${reservation.customer.gender=='Male'?'selected':''}>Male</option>
-		                  		<option value="Female" ${reservation.customer.gender=='Female'?'selected':''}>Female</option>
+		                  <select class="form-control" id="gender" name="gender" required>
+		                  	<option value=""> --Select--</option>
+		                  		<option value="Male" ${customer.gender=='Male'?'selected':''}>Male</option>
+		                  		<option value="Female" ${customer.gender=='Female'?'selected':''}>Female</option>
 		                  </select>
 		                </div>
 		                <div class="form-group">
 		                  <label for="phoneNo2">phoneNo2</label>
-		                  <input type="text" class="form-control" id="phoneNo2" name="customer.phoneNo2" value="${reservation.customer.phoneNo2}" placeholder="phoneNo2">
+		                  <input type="text" class="form-control" id="phoneNo2" name="phoneNo2" value="${customer.phoneNo2}" placeholder="phoneNo2">
 		                </div>
 	                </div>
 	                
 	                <div class="col-md-4">
 		                <div id="my_camera">
 		                <img id="imageprev" src="file:/C:/Users/KISHORE/Desktop/test_image.jpeg"/>
-<%-- 		                	<img id="imageprev" width="360" height="260" src="${reservation.path}"> --%>
+<%-- 		                	<img id="imageprev" width="360" height="260" src="${path}"> --%>
 		                </div>
 						<input type=button value="WebCam" onClick="initializeWebCam()">
 						<input type=button value="Snapshot" onClick="take_snapshot()">
@@ -78,47 +81,47 @@
 	                <div class="col-md-4">
 		                <div class="form-group">
 		                  <label for="emailId">Email</label>
-		                  <input type="text" class="form-control" id="emailId" name="customer.emailId" value="${reservation.customer.emailId}" placeholder="emailId">
+		                  <input type="email" class="form-control" id="emailId" name="emailId" value="${customer.emailId}" placeholder="emailId" required>
 		                </div>
 		                <div class="form-group">
 		                  <label for="doorNo">D.No</label>
-		                  <input type="text" class="form-control" id="doorNo" name="customer.doorNo" value="${reservation.customer.doorNo}" placeholder="Door No">
+		                  <input type="text" class="form-control" id="doorNo" name="doorNo" value="${customer.doorNo}" placeholder="Door No">
 		                </div>
 		                <div class="form-group">
 		                  <label for="state">State</label>
-		                  <input type="text" class="form-control" id="state" name="customer.state" value="${reservation.customer.state}" placeholder="State">
+		                  <input type="text" class="form-control" id="state" name="state" value="${customer.state}" placeholder="State">
 		                </div>
 	                </div>
 	                <div class="col-md-4">
 		                <div class="form-group">
 		                  <label for="idType">Id Type</label>
-		                  <select class="form-control" id="idType" name="customer.idType">
+		                  <select class="form-control" id="idType" name="idType">
 		                  	<option> --Select--</option>
-		                  		<option value="AadharCard" ${reservation.customer.idType=='AadharCard'?'selected':''}>AadharCard</option>
-		                  		<option value="VoterId" ${reservation.customer.idType=='VoterId'?'selected':''}>VoterId</option>
+		                  		<option value="AadharCard" ${customer.idType=='AadharCard'?'selected':''}>AadharCard</option>
+		                  		<option value="VoterId" ${customer.idType=='VoterId'?'selected':''}>VoterId</option>
 		                  </select>
 		                </div>
 		                <div class="form-group">
 		                  <label for="street">Street</label>
-		                  <input type="text" class="form-control" id="street" name="customer.street" value="${reservation.customer.street}" placeholder="Street">
+		                  <input type="text" class="form-control" id="street" name="street" value="${customer.street}" placeholder="Street">
 		                </div>
 		                <div class="form-group">
 		                  <label for="country">Country</label>
-		                  <input type="text" class="form-control" id="country" name="customer.country" value="${reservation.customer.country}" placeholder="Country">
+		                  <input type="text" class="form-control" id="country" name="country" value="${customer.country}" placeholder="Country">
 		                </div>
 	                </div>
 	                <div class="col-md-4">
 		                <div class="form-group">
 		                  <label for="idValue">Id Value</label>
-		                  <input type="text" class="form-control" id="idValue" name="customer.idValue" value="${reservation.customer.idValue}" placeholder="Id Value">
+		                  <input type="text" class="form-control" id="idValue" name="idValue" value="${customer.idValue}" placeholder="Id Value" required>
 		                </div>
 		                <div class="form-group">
 		                  <label for="city">City</label>
-		                  <input type="text" class="form-control" id="city" name="customer.city" value="${reservation.customer.city}" placeholder="City">
+		                  <input type="text" class="form-control" id="city" name="city" value="${customer.city}" placeholder="City">
 		                </div>
 		                <div class="form-group">
 		                  <label for="religion">Religion</label>
-		                  <input type="text" class="form-control" id="religion" name="customer.religion" value="${reservation.customer.religion}" placeholder="Religion">
+		                  <input type="text" class="form-control" id="religion" name="religion" value="${customer.religion}" placeholder="Religion">
 		                </div>
 	                </div>
                 </div>
@@ -126,13 +129,27 @@
 	                <div class="col-md-4">
 	                	<div class="form-group">
 		                  <label for="occupation">Occupation</label>
-		                  <input type="text" class="form-control" id="occupation" name="customer.occupation" value="${reservation.customer.occupation}" placeholder="Occupation">
+		                  <input type="text" class="form-control" id="occupation" name="occupation" value="${customer.occupation}" placeholder="Occupation">
+		                </div>
+	                </div>
+	                
+	            </div>
+	            
+            <c:forEach items="${reservationList}" var="reservation" varStatus="status">
+	            <div class="col-md-12">
+	                <div class="col-md-2">
+	                	<div class="form-group">
+		                  <label for="amount">Room No</label>
+		                  <input type="hidden" class="form-control" name="reservationList[${status.index}].room.roomId" value="${reservation.room.roomId}">
+		                  <input type="hidden" class="form-control" name="reservationList[${status.index}].reservationId" value="${reservation.reservationId}">
+		                  <br>${reservation.room.roomNumber}
 		                </div>
 	                </div>
 	                <div class='col-md-4'>
 				      <div class="form-group">
+				        <label for="checkIn">Check In</label>
 				        <div class='input-group'>
-				          <input type='text' class="form-control datetimepicker" name="startDate" value="<fmt:formatDate value="${reservation.startDate}" pattern="yyyy-MM-dd" />"/>
+				          <input type='text' class="form-control datetimepicker" name="checkIn" value="<fmt:formatDate value="${reservation.checkIn}" pattern="yyyy-MM-dd" />"/>
 				          <span class="input-group-addon">
 				            <span class="glyphicon glyphicon-calendar"></span>
 				          </span>
@@ -141,26 +158,28 @@
 				    </div>
 				    <div class='col-md-4'>
 				      <div class="form-group">
+				      	<label for="checkOut">Check Out</label>
 				        <div class='input-group'>
-				          <input type='text' class="form-control datetimepicker" name="endDate" value="<fmt:formatDate value="${reservation.endDate}" pattern="yyyy-MM-dd" />"/>
+				          <input type='text' class="form-control datetimepicker" name="checkOut" value="<fmt:formatDate value="${reservation.checkOut}" pattern="yyyy-MM-dd" />"/>
 				          <span class="input-group-addon">
 				            <span class="glyphicon glyphicon-calendar"></span>
 				          </span>
 				        </div>
 				      </div>
 				    </div>
+	                <div class="col-md-2">
+	                	<div class="form-group">
+		                  <label for="amount">Amount</label>
+		                  <input type="number" class="form-control amount" style="padding-right:0px;" name="reservationList[${status.index}].amount" value="${reservation.room.roomCharges}" placeholder="Amount">
+		                </div>
+	                </div>
 	            </div>
+            </c:forEach>
 	            <div class="col-md-12">
 	                <div class="col-md-4">
 	                	<div class="form-group">
-		                  <label for="amount">Amount</label>
-		                  <input type="text" class="form-control" id="amount" name="amount" value="${room.roomCharges}" placeholder="Amount">
-		                </div>
-	                </div>
-	                <div class="col-md-4">
-	                	<div class="form-group">
 		                  <label for="totalAmount">Total Amount</label>
-		                  <input type="text" class="form-control" id="totalAmount" name="totalAmount" value="" placeholder="Total Amount">
+		                  <input type="text" class="form-control" id="totalAmount" name="totalAmount" value="0" readOnly>
 		                </div>
 	                </div>
 	            </div>
@@ -172,7 +191,7 @@
 							  </label>
 	                	<c:forEach items="${hotelPaymentGatewayList}" var="hotelPaymentGateway">
 			                  <label>
-							  	<input type="radio" name="paymentType" value="${hotelPaymentGateway.paymentGateway.paymentGatewayId}">
+							  	<input type="radio" name="paymentType" value="${hotelPaymentGateway.hotelPaymentGatewayId}">
 							  	${hotelPaymentGateway.paymentGateway.paymentGatewayName}
 							  </label>
 						  </c:forEach>
@@ -184,7 +203,7 @@
 
               <div class="box-footer">
                 <div align="center">
-	                <button type="submit" class="btn btn-primary">Submit</button>
+	                <button type="submit" class="btn btn-primary" id="submit">Submit</button>
 	                <input type="button" class="btn btn-warning" value="Back" onclick="history.go(-1);"/>
                 </div>
               </div>
@@ -239,6 +258,16 @@
 </section>
 </div>
 <script>
+$("#submit").on("click", function(){
+// $('#reservationform').submit(function (e) {
+	if ($('#reservationform').find('.has-error').length) {
+		// FORM NOT VALIDATED
+		return false;
+	}else{
+		return true;
+	}
+});
+
 $(document).ready(function() {
 	$('.datetimepicker').daterangepicker({
 		singleDatePicker: true,
@@ -248,10 +277,22 @@ $(document).ready(function() {
 	    locale: {
 	      format: 'DD/MM/YYYY hh:mm A'
 	    }
-	  }
-	);
-
+	});
+	
+	calculateTotal();
 });
+
+$('.amount').on('keyup blur', function(){
+	calculateTotal();
+});
+
+function calculateTotal(){
+	var totalAmount = 0;
+	$('.amount').each(function(i, el){
+		totalAmount += parseInt($(el).val());
+	});
+	$('#totalAmount').val(totalAmount);
+}
 </script>
 
 <!-- Configure a few settings and attach camera -->

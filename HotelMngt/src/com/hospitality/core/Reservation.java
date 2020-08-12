@@ -9,7 +9,9 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.hospitality.util.BaseEntity;
 import com.voodoodyne.jackson.jsog.JSOGGenerator;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -26,7 +28,11 @@ public class Reservation extends BaseEntity implements Serializable {
 	@Column(name="reservation_id")
 	private String reservationId;
 	
-	@ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY)
+//	@ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY)
+//	@JoinColumn(name="customer_id")
+//	private Customer customer;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="customer_id")
 	private Customer customer;
 	
@@ -36,23 +42,17 @@ public class Reservation extends BaseEntity implements Serializable {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy hh:mm a")
-	@Column(name="start_date")
-	private Date startDate;
+	@Column(name="check_in")
+	private Date checkIn;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy hh:mm a")
-	@Column(name="end_date")
-	private Date endDate;
-	
-	@Column(name="path")
-	private String path;
+	@Column(name="check_out")
+	private Date checkOut;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="payment_account_id")
 	private PaymentAccount paymentAccount;
-	
-	@Transient
-	private String customerImage;
 	
 	@Transient
 	private Float amount = 0.0f;
@@ -90,36 +90,20 @@ public class Reservation extends BaseEntity implements Serializable {
 		this.room = room;
 	}
 
-	public Date getStartDate() {
-		return startDate;
+	public Date getCheckIn() {
+		return checkIn;
 	}
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+	public void setCheckIn(Date checkIn) {
+		this.checkIn = checkIn;
 	}
 
-	public Date getEndDate() {
-		return endDate;
+	public Date getCheckOut() {
+		return checkOut;
 	}
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
-
-	public String getPath() {
-		return path;
-	}
-
-	public void setPath(String path) {
-		this.path = path;
-	}
-
-	public String getCustomerImage() {
-		return customerImage;
-	}
-
-	public void setCustomerImage(String customerImage) {
-		this.customerImage = customerImage;
+	public void setCheckOut(Date checkOut) {
+		this.checkOut = checkOut;
 	}
 
 	public Float getAmount() {

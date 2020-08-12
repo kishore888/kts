@@ -3,7 +3,10 @@
 
 package com.hospitality.boimpl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +14,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.hospitality.bo.HotelBO;
+import com.hospitality.bo.ReservationBO;
 import com.hospitality.bo.TransactionBO;
+import com.hospitality.core.Customer;
 import com.hospitality.core.Hotel;
 import com.hospitality.core.HotelPaymentGateway;
 import com.hospitality.core.Payment;
@@ -19,12 +24,15 @@ import com.hospitality.core.PaymentAccount;
 import com.hospitality.core.PaymentDetails;
 import com.hospitality.core.Reservation;
 import com.hospitality.core.Transaction;
+import com.hospitality.core.TransactionDetails;
 import com.hospitality.dao.PaymentAccountDAO;
 import com.hospitality.dao.PaymentDAO;
 import com.hospitality.dao.PaymentDetailsDAO;
 import com.hospitality.dao.TransactionDAO;
+import com.hospitality.dao.TransactionDetailsDAO;
 import com.hospitality.util.Constants;
 import com.hospitality.util.PaymentType;
+import com.hospitality.util.PrimaryKeyListener;
 
 /**
 * @author  Kishore
@@ -48,6 +56,12 @@ public class TransactionBOImpl implements TransactionBO{
 	
 	@Autowired
 	private HotelBO hotelBO;
+	
+	@Autowired
+	private TransactionDetailsDAO transactionDetailsDAO;
+	
+	@Autowired
+	private ReservationBO reservationBO;
 	
 	@Override
 	public void create(Transaction transaction) throws Exception{
@@ -74,15 +88,66 @@ public class TransactionBOImpl implements TransactionBO{
 	}
 
 	@Override
-	public void createTransaction(Reservation reservation, Hotel hotel) throws Exception {
+	public String createTransaction(Customer customer, Hotel hotel) throws Exception {
+		PaymentAccount paymentAccount = null;
+		String clientTransactionNo = "";
+		Double totalAmount = 0.0;
+		try{
+			totalAmount = customer.getReservationList().stream().collect(Collectors.summingDouble(r->r.getAmount()));
+			
+			paymentAccount = paymentAccountDAO.retrieveById(customer.getPaymentAccountId());
+			
+			Transaction transaction = new Transaction();
+			clientTransactionNo = PrimaryKeyListener.smartPkey();
+			transaction.setClientTransactionNo(clientTransactionNo);
+			transaction.setAmount(totalAmount.floatValue());
+//			transaction.setUdf1(udf1);
+//			transaction.setUdf2(udf2);
+			transaction.setPhoneNo(customer.getPhoneNo1());
+			transaction.setEmailId(customer.getEmailId());
+			transaction.setCustomer(customer);
+			transaction.setPaymentAccount(paymentAccount);
+			transactionDAO.create(transaction);
+			
+			for(Reservation reservation : customer.getReservationList()) {
+				TransactionDetails transactionDetails = new TransactionDetails();
+				transactionDetails.setAmount(reservation.getAmount());
+				transactionDetails.setReservation(reservation);
+				transactionDetails.setTransaction(transaction);
+				transactionDetailsDAO.save(transactionDetails);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			throw e;
+		}
+		return clientTransactionNo;
+	}
+
+	@Override
+	public Transaction retrieveByClientTransactionNo(String clientTransactionNo) throws Exception {
+		Transaction transaction = null;
+		try{
+			transaction = transactionDAO.retrieveByClientTransactionNo(clientTransactionNo);
+		}catch(Exception e){
+			e.printStackTrace();
+			throw e;
+		}
+		return transaction;
+	}
+
+	@Override
+	public void payUSuccess(String clientTransactionNo, Hotel hotel) throws Exception {
 		String billNo = "";
 		PaymentAccount paymentAccount = null;
-		try{
-			paymentAccount = paymentAccountDAO.retrieveById(reservation.getPaymentAccount().getPaymentAccountId());
+		Transaction transaction = null;
+		try {
+			transaction = transactionDAO.retrieveByClientTransactionNo(clientTransactionNo);
+			
+			paymentAccount = paymentAccountDAO.retrieveById(transaction.getPaymentAccount().getPaymentAccountId());
 			billNo = hotelBO.generateBillNo(hotel, paymentAccount);
 			
 			PaymentDetails paymentDetails = new PaymentDetails();
-			paymentDetails.setTotalAmount(reservation.getTotalAmount());
+			paymentDetails.setTotalAmount(transaction.getAmount());
 			paymentDetails.setTypeOfPayment(Constants.ONLINE);
 			paymentDetails.setBillNo(billNo);
 			paymentDetailsDAO.save(paymentDetails);
@@ -90,15 +155,15 @@ public class TransactionBOImpl implements TransactionBO{
 			paymentAccount.setBillCount(paymentAccount.getBillCount()+1);
 			paymentAccountDAO.update(paymentAccount);
 			
-			Payment payment = new Payment();
-			payment.setAmount(reservation.getAmount());
-			payment.setPaymentDetails(paymentDetails);
-			payment.setReservation(reservation);
-			paymentDAO.save(payment);
+			for(TransactionDetails transactionDetails : transaction.getTransactionDetailsList()) {
+				Payment payment = new Payment();
+				payment.setAmount(transactionDetails.getAmount());
+				payment.setPaymentDetails(paymentDetails);
+				payment.setReservation(transactionDetails.getReservation());
+				paymentDAO.save(payment);
+			}
 			
-			Transaction transaction = new Transaction();
 			transaction.setPaymentDetails(paymentDetails);
-			transactionDAO.create(transaction);
 		}catch(Exception e){
 			e.printStackTrace();
 			throw e;

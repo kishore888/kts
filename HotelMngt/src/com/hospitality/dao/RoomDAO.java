@@ -8,7 +8,7 @@ import com.hospitality.core.Room;
 public interface RoomDAO extends GenericDAO<Room>{
 
 	public List<Room> retrieveRoomList(Hotel hotel) throws Exception;
-
 	public Room retrieveByRoomId(String roomId) throws Exception;
+	public List<Room> retrieveListByIds(List<String> roomIdList) throws Exception;
 
 }

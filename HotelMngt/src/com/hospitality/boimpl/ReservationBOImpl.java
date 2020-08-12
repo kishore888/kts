@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 import javax.xml.bind.DatatypeConverter;
 
@@ -18,8 +19,11 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.hospitality.bo.ReservationBO;
+import com.hospitality.core.Customer;
 import com.hospitality.core.Reservation;
+import com.hospitality.dao.CustomerDAO;
 import com.hospitality.dao.ReservationDAO;
+import com.hospitality.dao.TransactionDAO;
 
 /**
 * @author  #Kishore
@@ -32,10 +36,13 @@ public class ReservationBOImpl implements ReservationBO{
 	@Autowired
 	private ReservationDAO reservationDAO;
 	
+	@Autowired
+	private CustomerDAO customerDAO;
+	
 	@Override
-	public void create(Reservation reservation) throws Exception{
+	public Customer create(Customer customer) throws Exception{
 		try{
-			String base64String = reservation.getCustomerImage();
+			String base64String = customer.getCustomerImage();
 	        if(StringUtils.isNotBlank(base64String)) {
 				String[] strings = base64String.split(",");
 		        String extension;
@@ -58,18 +65,28 @@ public class ReservationBOImpl implements ReservationBO{
 	            outputStream.write(data);
 	            outputStream.close();
 		        
-	            reservation.setPath(path);
+	            customer.setPath(path);
 	        }
             
-			if(StringUtils.isNotBlank(reservation.getReservationId())){
-				reservationDAO.update(reservation);
-			}else{
-				reservationDAO.create(reservation);
-			}
+	        if(StringUtils.isNotBlank(customer.getCustomerId())) {
+	        	customerDAO.update(customer);
+	        }else {
+	        	customerDAO.create(customer);
+	        }
+	        
+	        for(Reservation reservation : customer.getReservationList()) {
+				if(StringUtils.isNotBlank(reservation.getReservationId())){
+					reservationDAO.update(reservation);
+				}else{
+					reservation.setCustomer(customer);
+					reservationDAO.create(reservation);
+				}
+	        }
 		}catch(Exception e){
 			e.printStackTrace();
 			throw e;
 		}
+		return customer;
 	}
 
 	@Override
@@ -93,6 +110,18 @@ public class ReservationBOImpl implements ReservationBO{
 			throw e;
 		}
 		return reservation;
+	}
+
+	@Override
+	public List<Reservation> retrieveListByIds(List<String> reservationIdList) throws Exception {
+		List<Reservation> reservationList = new ArrayList<Reservation>();
+		try{
+			reservationList = reservationDAO.retrieveListByIds(reservationIdList);
+		}catch(Exception e){
+			e.printStackTrace();
+			throw e;
+		}
+		return reservationList;
 	}
 
 }

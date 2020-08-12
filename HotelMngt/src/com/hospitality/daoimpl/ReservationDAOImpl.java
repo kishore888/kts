@@ -3,6 +3,9 @@
 
 package com.hospitality.daoimpl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
@@ -35,6 +38,21 @@ public class ReservationDAOImpl extends GenericDAOImpl<Reservation> implements R
 			throw e;
 		}
 		return reservation;
+	}
+
+	@Override
+	public List<Reservation> retrieveListByIds(List<String> reservationIdList) throws Exception {
+		List<Reservation> reservationList = new ArrayList<>();
+		try{
+			String queryString = "Select r from Reservation r join fetch r.customer join fetch r.room join fetch r.paymentAccount where r.reservationId in (:reservationIdList)";
+			Query query = entityManager.createQuery(queryString);
+			query.setParameter("reservationIdList", reservationIdList);
+			reservationList = query.getResultList();
+		}catch(Exception e){
+			e.printStackTrace();
+			throw e;
+		}
+		return reservationList;
 	}
 
 }

@@ -5,6 +5,7 @@ package com.hospitality.bo;
 
 import java.util.List;
 
+import com.hospitality.core.Customer;
 import com.hospitality.core.Reservation;
 
 /**
@@ -13,8 +14,9 @@ import com.hospitality.core.Reservation;
 
 public interface ReservationBO {
 
-	public void create(Reservation reservation) throws Exception;
+	public Customer create(Customer customer) throws Exception;
 	public List<Reservation> retrieveList() throws Exception;
 	public Reservation retrieveByReservationId(String reservationId) throws Exception;
+	public List<Reservation> retrieveListByIds(List<String> reservationIdList) throws Exception;
 
 }

@@ -47,6 +47,10 @@ public class PaymentDetails extends BaseEntity implements Serializable {
 
 	@Column(name="pos_no")
 	private String posNo;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="customer_id")
+	private Customer customer;
 
 	//bi-directional many-to-one association to Payment
 	@OneToMany(mappedBy="paymentDetails")
@@ -147,6 +151,14 @@ public class PaymentDetails extends BaseEntity implements Serializable {
 		payment.setPaymentDetails(null);
 
 		return payment;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 }

@@ -15,5 +15,6 @@ public interface CustomerBO {
 
 	public void create(Customer customer) throws Exception;
 	public List<Customer> retrieveList() throws Exception;
+	public Customer retrieveById(String customerId) throws Exception;
 
 }

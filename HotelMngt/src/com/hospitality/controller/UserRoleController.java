@@ -20,7 +20,7 @@ import com.hospitality.core.UserRole;
 */
 
 @Controller
-@RequestMapping("/UserRole/")
+@RequestMapping("/userRole/")
 public class UserRoleController {
 	
 	@Autowired

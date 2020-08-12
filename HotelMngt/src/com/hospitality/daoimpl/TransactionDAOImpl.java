@@ -20,4 +20,21 @@ import com.hospitality.dao.TransactionDAO;
 @Transactional
 public class TransactionDAOImpl extends GenericDAOImpl<Transaction> implements TransactionDAO{
 
+	@Override
+	public Transaction retrieveByClientTransactionNo(String clientTransactionNo) throws Exception {
+		Transaction transaction = null;
+		try{
+			String queryString = "Select t from Transaction t left join fetch t.paymentDetails join fetch t.customer join fetch t.paymentAccount where t.clientTransactionNo=:clientTransactionNo";
+			Query query = entityManager.createQuery(queryString);
+			query.setParameter("clientTransactionNo", clientTransactionNo);
+			if(query.getResultList().size() > 0) {
+				transaction = (Transaction) query.getSingleResult();
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return transaction;
+	}
+
 }

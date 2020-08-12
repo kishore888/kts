@@ -14,5 +14,6 @@ public interface RoomBO {
 	public Map<String, Object> retrieveRoomsServersideDatatable(DataTableDTO dataTable, Hotel hotel) throws Exception;
 	public Room retrieveById(String roomId) throws Exception;
 	public Room retrieveByRoomId(String roomId) throws Exception;
+	public List<Room> retrieveListByIds(List<String> roomIdList) throws Exception;
 
 }

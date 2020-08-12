@@ -20,7 +20,7 @@ import com.hospitality.core.ElementStyle;
 */
 
 @Controller
-@RequestMapping("/ElementStyle/")
+@RequestMapping("/elementStyle/")
 public class ElementStyleController {
 	
 	@Autowired

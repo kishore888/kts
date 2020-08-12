@@ -36,7 +36,7 @@ public class PrimaryKeyListener {
 		return null;
 	}
 	
-	public String smartPkey(){
+	public static String smartPkey(){
 		long unixTime = System.currentTimeMillis()/10L;
 		String pkey = randomString(4)+Long.toHexString(unixTime).toUpperCase()+randomString(4);
 		return pkey;
@@ -44,7 +44,7 @@ public class PrimaryKeyListener {
 	
 	static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	static SecureRandom secureRandom = new SecureRandom();
-	String randomString(int length){
+	public static String randomString(int length){
 		StringBuilder sb = new StringBuilder(length);
 		for(int i=0;i<length;i++){
 			sb.append(AB.charAt(secureRandom.nextInt(AB.length())));

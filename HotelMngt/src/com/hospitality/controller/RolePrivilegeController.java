@@ -20,7 +20,7 @@ import com.hospitality.core.RolePrivilege;
 */
 
 @Controller
-@RequestMapping("/RolePrivilege/")
+@RequestMapping("/rolePrivilege/")
 public class RolePrivilegeController {
 	
 	@Autowired

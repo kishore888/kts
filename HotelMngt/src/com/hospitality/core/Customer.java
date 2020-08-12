@@ -7,7 +7,9 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.hospitality.util.BaseEntity;
 import com.voodoodyne.jackson.jsog.JSOGGenerator;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -66,7 +68,24 @@ public class Customer extends BaseEntity implements Serializable {
 
 	@Column(name="phone_no2")
 	private String phoneNo2;
+	
+	@Column(name="path")
+	private String path;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
+    private List<Reservation> reservationList = new ArrayList<>(0);
+    
+	@Transient
+	private String customerImage;
 
+	@Transient
+	private String paymentType;
+	
+	@Transient
+	private Float totalAmount = 0.0f;
+	
+	@Transient
+	private String paymentAccountId;
 	
 	public Customer() {
 	}
@@ -179,8 +198,48 @@ public class Customer extends BaseEntity implements Serializable {
 		return this.phoneNo2;
 	}
 
+	public List<Reservation> getReservationList() {
+		return reservationList;
+	}
+
+	public Float getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(Float totalAmount) {
+		this.totalAmount = totalAmount;
+	}
+
+	public String getPaymentType() {
+		return paymentType;
+	}
+
+	public void setPaymentType(String paymentType) {
+		this.paymentType = paymentType;
+	}
+
+	public void setReservationList(List<Reservation> reservationList) {
+		this.reservationList = reservationList;
+	}
+
 	public void setPhoneNo2(String phoneNo2) {
 		this.phoneNo2 = phoneNo2;
+	}
+
+	public String getCustomerImage() {
+		return customerImage;
+	}
+
+	public void setCustomerImage(String customerImage) {
+		this.customerImage = customerImage;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 	public String getReligion() {
@@ -205,6 +264,14 @@ public class Customer extends BaseEntity implements Serializable {
 
 	public void setStreet(String street) {
 		this.street = street;
+	}
+
+	public String getPaymentAccountId() {
+		return paymentAccountId;
+	}
+
+	public void setPaymentAccountId(String paymentAccountId) {
+		this.paymentAccountId = paymentAccountId;
 	}
 
 }

@@ -11,4 +11,6 @@ import com.hospitality.core.Transaction;
 
 public interface TransactionDAO extends GenericDAO<Transaction>{
 
+	public Transaction retrieveByClientTransactionNo(String clientTransactionNo) throws Exception;
+
 }

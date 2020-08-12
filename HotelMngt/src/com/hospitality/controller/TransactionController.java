@@ -6,6 +6,8 @@ package com.hospitality.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hospitality.bo.TransactionBO;
+import com.hospitality.core.Hotel;
 import com.hospitality.core.Transaction;
 
 /**
@@ -20,7 +23,7 @@ import com.hospitality.core.Transaction;
 */
 
 @Controller
-@RequestMapping("/Transaction/")
+@RequestMapping("/transaction/")
 public class TransactionController extends commonController{
 	
 	@Autowired
@@ -54,6 +57,30 @@ public class TransactionController extends commonController{
 			e.printStackTrace();
 		}
 		return new ModelAndView("TransactionList").addObject("TransactionList", TransactionList);
+	}
+	
+	@RequestMapping(value="payUSuccess",method = RequestMethod.POST)
+	public ModelAndView payUSuccess(String clientTransactionNo, HttpSession session){
+		Hotel hotel = null;
+		try{
+			hotel = (Hotel)session.getAttribute("hotelObj");
+			transactionBO.payUSuccess(clientTransactionNo, hotel);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return new ModelAndView("redirect:/room/retrieveRoomList");
+	}
+	
+	@RequestMapping(value="payUFailure",method = RequestMethod.POST)
+	public ModelAndView payUFailure(String clientTransactionNo, HttpSession session){
+		Hotel hotel = null;
+		try{
+			hotel = (Hotel)session.getAttribute("hotelObj");
+			transactionBO.payUSuccess(clientTransactionNo, hotel);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return new ModelAndView("PayUErr", "txnid", clientTransactionNo);
 	}
 	
 }
